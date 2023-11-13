@@ -15,6 +15,12 @@ type GeometryPoint struct {
 	Type        string    `json:"type" bson:"type"`
 }
 
+type GeoJsonPoint struct {
+	Type       string        `json:"type" bson:"type"`
+	Properties Properties    `json:"properties" bson:"properties"`
+	Geometry   GeometryPoint `json:"geometry" bson:"geometry"`
+}
+
 type GeoJsonLineString struct {
 	Type       string             `json:"type" bson:"type"`
 	Properties Properties         `json:"properties" bson:"properties"`
@@ -51,4 +57,10 @@ type Credential struct {
 	Status  bool   `json:"status" bson:"status"`
 	Token   string `json:"token,omitempty" bson:"token,omitempty"`
 	Message string `json:"message,omitempty" bson:"message,omitempty"`
+}
+
+type Jaja struct {
+	Status  bool        `json:"status" bson:"status"`
+	Message string      `json:"message" bson:"message"`
+	Data    interface{} `json:"data" bson:"data"`
 }

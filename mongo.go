@@ -21,6 +21,19 @@ func GetAllBangunanLineString(mongoconn *mongo.Database, collection string) []Ge
 	return lokasi
 }
 
+func PostPoint(mongoconn *mongo.Database, collection string, pointdata GeoJsonPoint) interface{} {
+	return atdb.InsertOneDoc(mongoconn, collection, pointdata)
+}
+
+func PostLinestring(mongoconn *mongo.Database, collection string, linestringdata GeoJsonLineString) interface{} {
+	return atdb.InsertOneDoc(mongoconn, collection, linestringdata)
+}
+
+func PostPolygon(mongoconn *mongo.Database, collection string, polygondata GeoJsonPolygon) interface{} {
+	return atdb.InsertOneDoc(mongoconn, collection, polygondata)
+}
+
+
 func IsPasswordValid(mongoconn *mongo.Database, collection string, userdata User) bool {
 	filter := bson.M{"username": userdata.Username}
 	res := atdb.GetOneDoc[User](mongoconn, collection, filter)
@@ -33,4 +46,13 @@ func InsertUserdata(mongoenv *mongo.Database, collname, username, role, password
 	req.Password = password
 	req.Role = role
 	return atdb.InsertOneDoc(mongoenv, collname, req)
+}
+
+func CreateResponse(status bool, message string, data interface{}) Jaja {
+	response := Jaja{
+		Status:  status,
+		Message: message,
+		Data:    data,
+	}
+	return response
 }
