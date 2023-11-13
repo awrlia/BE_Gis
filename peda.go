@@ -69,7 +69,7 @@ func MembuatGeojsonPointToken(mongoenv, dbname, collname string, r *http.Request
 	mconn := SetConnection(mongoenv, dbname)
 
 	// Parsing Request Body
-	var datapoint GeoJsonLineString
+	var datapoint GeoJsonPoint
 	err := json.NewDecoder(r.Body).Decode(&datapoint)
 	if err != nil {
 		return err.Error()
@@ -77,7 +77,7 @@ func MembuatGeojsonPointToken(mongoenv, dbname, collname string, r *http.Request
 
 	if r.Header.Get("token") == os.Getenv("token") {
 		// Handling Authorization
-		err := PostLinestring(mconn, collname, datapoint)
+		err := PostPoint(mconn, collname, datapoint)
 		if err != nil {
 			// Success
 			return GCFReturnStruct(CreateResponse(true, "Success: LineString created", datapoint))
@@ -97,7 +97,7 @@ func MembuatGeojsonPolylineToken(mongoenv, dbname, collname string, r *http.Requ
 	mconn := SetConnection(mongoenv, dbname)
 
 	// Parsing Request Body
-	var datapoint GeoJsonPoint
+	var datapoint GeoJsonLineString
 	err := json.NewDecoder(r.Body).Decode(&datapoint)
 	if err != nil {
 		return err.Error()
@@ -105,7 +105,7 @@ func MembuatGeojsonPolylineToken(mongoenv, dbname, collname string, r *http.Requ
 
 	if r.Header.Get("token") == os.Getenv("token") {
 		// Handling Authorization
-		err := PostPoint(mconn, collname, datapoint)
+		err := PostLinestring(mconn, collname, datapoint)
 		if err != nil {
 			// Success
 			return GCFReturnStruct(CreateResponse(true, "Success: LineString created", datapoint))
